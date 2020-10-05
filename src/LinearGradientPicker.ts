@@ -8,15 +8,15 @@ export default class LinearGradientPicker implements LinearGradientPickerInterfa
   private getAt(at: number): RGBAColor {
     // find color before and after
     let selectedIndex: number = 0;
-    for (let i = 0; i < this.colors.length; i++) {
-      if (this.colors[i].position > at) {
-        selectedIndex = i;
+    for (let i = this.colors.length - 1; i > 0; i--) {
+			if (at >= this.colors[i].position) {
+				selectedIndex = i;
         break;
       }
     }
 
-    const left: GradientColor = this.colors[Math.max(selectedIndex - 1, 0)];
-    const right: GradientColor = this.colors[selectedIndex];
+    const left: GradientColor = this.colors[selectedIndex];
+    const right: GradientColor = this.colors[Math.min(selectedIndex + 1, this.colors.length - 1)];
 
     let r;
     let g;
