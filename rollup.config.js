@@ -5,11 +5,12 @@ import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 export default [
+  // browsers
   {
     input: 'src/index.ts',
     output: [
       {
-        name: 'linearGradientPicker',
+        name: 'LinearGradientPicker',
         file: pkg.browser,
         format: 'umd',
       },
@@ -20,7 +21,7 @@ export default [
     input: 'src/index.ts',
     output: [
       {
-        name: 'linearGradientPicker',
+        name: 'LinearGradientPicker',
         file: pkg.browser.replace('.js', '.min.js'),
         format: 'umd',
       },
