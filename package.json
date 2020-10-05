@@ -1,6 +1,6 @@
 {
   "name": "linear-gradient-picker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/liner-gradient-picker.cjs.min.js",
   "module": "dist/liner-gradient-picker.esm.min.js",
   "browser": "dist/liner-gradient-picker.umd.min.js",
