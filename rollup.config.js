@@ -1,11 +1,9 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-import pkg from './package.json';
+import { terser } from 'rollup-plugin-terser';
 
-function get_tsconfig() {
-  return typescript();
-}
+import pkg from './package.json';
 export default [
   {
     input: 'src/index.ts',
@@ -16,11 +14,18 @@ export default [
         format: 'umd',
       },
     ],
-    plugins: [
-      get_tsconfig(),
-      resolve(), // so Rollup can find `ms`
-      commonjs(), // so Rollup can convert `ms` to an ES module
+    plugins: [typescript()],
+  },
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        name: 'linearGradientPicker',
+        file: pkg.browser.replace('.js', '.min.js'),
+        format: 'umd',
+      },
     ],
+    plugins: [typescript(), terser()],
   },
 
   // CommonJS (for Node) and ES module (for bundlers) build.
@@ -31,13 +36,20 @@ export default [
   // `file` and `format` for each target)
   {
     input: 'src/index.ts',
-    external: ['ms'],
     plugins: [
-      get_tsconfig(), // so Rollup can convert TypeScript to JavaScript
+      typescript(), // so Rollup can convert TypeScript to JavaScript
     ],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' },
+    ],
+  },
+  {
+    input: 'src/index.ts',
+    plugins: [typescript(), terser()],
+    output: [
+      { file: pkg.main.replace('.js', '.min.js'), format: 'cjs' },
+      { file: pkg.module.replace('.js', '.min.js'), format: 'es' },
     ],
   },
 ];
